@@ -43,12 +43,18 @@ public class Greedy42862Test {
         ////////////////////////// GIVEN //////////////////////////
         Greedy42862 greedy42862 = new Greedy42862();
         n = 7;
-        lost = new int[]{2, 3, 4}; // 2,4
-        reserve = new int[]{1, 3, 5, 6}; // 1,5,6
+        lost = new int[]{2, 3, 4};
+        reserve = new int[]{1, 3, 5, 6};
+        int answer = 7;
 
+        int n2 = 5;
+        int[] lost2 = new int[]{2, 4};
+        int[] reserve2 = new int[]{1, 3, 5};
+        int answer2 = 5;
         ////////////////////////// WHEN //////////////////////////
 
         ////////////////////////// THEN //////////////////////////
-        assertThat(7, equalTo(greedy42862.solution(n, lost, reserve)));
+        assertThat(answer, equalTo(greedy42862.solution(n, lost, reserve)));
+        assertThat(answer2, equalTo(greedy42862.solution(n2, lost2, reserve2)));
     }
 }
