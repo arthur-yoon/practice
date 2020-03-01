@@ -1,4 +1,4 @@
-package programmers.arthur;
+package programmers.YuJeongHyeon;
 
 /**
  * Created or Modified by arthur on 2020/02/24
@@ -41,28 +41,35 @@ package programmers.arthur;
  */
 public class Greedy42862 {
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = n - lost.length;
-        for (int i = 0; i < lost.length; i++) {
-            for (int j = 0; j < reserve.length; j++) {
-                if (lost[i] == reserve[j]) {
-                    answer++;
-                    lost[i] = -100;
-                    reserve[j] = -200;
+        //n 전체 학생수
+        //lost 도난당한 학생수
+        //reserve 여벌 옷 가진 학생수
+        int answer = n - lost.length; //체육수업을 들을수있는 학생수 = 전체학생수 n - 도난당한 학생수 lost
+        for(int i = 0; i <lost.length;i++){
+            for(int k = 0; k <reserve.length;k++){
+                if(lost[i] == reserve[k]){
+                    answer ++; // 도난 당한 경우 여도 여벌옷이 있으므로 수업을 들을수있다.
+                    reserve[k] = -1; //여벌옷이 있지만 도난당했으므로 빌려줄수 없어서 -1로 변경
+                    lost[i] = -1; // 도난 당한 학생이지만 여벌옷이 있으므로  -1로 변경
                 }
+            }
+        }
+        for(int i = 0; i< lost.length; i ++){   //도난 당한 학생이 옷을 빌리는경우를 구하기 위해서
+            if(lost[i] > -1){   //도난은 당했지만 여벌옷이있는 학생은 제외
+                for(int k = 0; k< reserve.length; k++){
+                   if(reserve[k] != -1 && lost[i] - reserve[k] == 1) {    //여벌옷이있지만 도난당한 학생 제외하고 도난당한 학생 앞번호 학생이 여분옷을 가지고 있는경우
+                       answer++; // 수업을 들을수있는 학생수 증가
+                       lost[i] = -1; // 도난 당한 학생이지만 빌렸으므로  -1로 변경
+                       reserve[k] = -1;//여분옷을 빌려줬으므로 값변경
+                   }else  if(reserve[k] != -1 && lost[i] - reserve[k] == -1){    //여벌옷이있지만 도난당한 학생 제외하고 도난당한 학생 뒷번호 학생이 여분옷을 가지고 있는경우
+                       answer ++; // 수업을 들을수있는 학생수 증가
+                       lost[i] = -1; // 도난 당한 학생이지만 빌렸으므로 -1로 변경
+                       reserve[k] = -1;//여분옷을 빌려줬으므로 값변경
+                   }
+                }
+            }
+        }
 
-            }
-        }
-        for (int i = 0; i < lost.length; i++) {
-            if (lost[i] > 0) {
-                for (int j = 0; j < reserve.length; j++) {
-                    if (lost[i] - reserve[j] == 1 || lost[i] - reserve[j] == -1) {
-                        answer++;
-                        reserve[j] = -300;
-                        break;
-                    }
-                }
-            }
-        }
         return answer;
     }
 }
